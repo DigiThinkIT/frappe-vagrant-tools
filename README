@@ -9,6 +9,14 @@ This guide is for setting up a frappe/erpnext vagrant box from scratch plus a fe
 1) vagrant up
 2) Go make some coffee, this will take a while
 
+to create a test frappe site
+
+bench new-site frappe
+
+## Starting the dev instance of frappe
+
+bench start
+
 ## Mounting apps directory for ease of development
 
 You can use vagrant's file system sync feature to edit your apps in your host and making these changes immediately available to the frappe guest vm.
@@ -26,7 +34,7 @@ After you have built and initialized your vagrant box:
    mkdir ~/frappe-bench/apps
 
 3) Edit ~/.profile add the following lines at the end of the file
-   sudo mount --bind /vagrant/apps /home/frappe/frappe-bench/apps
+   sudo mount --bind /vagrant/apps /home/vagrant/frappe-bench/apps
 
 4) Execute changes to .profil
    source ~/.profile
