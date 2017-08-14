@@ -2,6 +2,16 @@
 
 This guide is for setting up a frappe/erpnext vagrant box from scratch plus a few extra productivity goodies.
 
+Make sure you have vagrant installed and virtual box:
+
+https://www.vagrantup.com/
+
+https://www.virtualbox.org/
+
+info about vagrant and virtualbox:
+
+https://www.vagrantup.com/docs/virtualbox/
+
 ## Creating vagrant box.
 
 ### Steps
