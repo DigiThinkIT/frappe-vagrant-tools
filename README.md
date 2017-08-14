@@ -16,8 +16,12 @@ https://www.vagrantup.com/docs/virtualbox/
 
 ### Steps
 
-1) vagrant up
-2) Go make some coffee, this will take a while
+1) Clone this repo somewhere in your host machine, open a terminal and cd into the directory.
+
+2) Kick off vagrant box setup:
+   vagrant up
+
+3) Go make some coffee, this will take a while
 
 to create a test frappe site
 
