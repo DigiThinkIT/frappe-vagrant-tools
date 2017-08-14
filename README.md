@@ -1,6 +1,6 @@
 # Custom Vagrant V8 Setup
 
-This guide is for setting up a frappe/erpnext vagrant box from scratch plus a few extra productivity goodies.
+This guide is for setting up a frappe/erpnext vagrant box from scratch plus a few extra productivity goodies. Right now this guide is MACOS **ONLY** but most steps should work fairly similarly on Windows and much more so on Linux.
 
 Make sure you have vagrant installed and virtual box:
 
@@ -30,7 +30,7 @@ bench new-site frappe
 ```bash
 bench start
 ```
-## Mounting apps directory for ease of development
+## Mounting apps directory for ease of development **MAC/LINUX Tested Only**
 
 You can use vagrant's file system sync feature to edit your apps in your host and making these changes immediately available to the frappe guest vm.
 
