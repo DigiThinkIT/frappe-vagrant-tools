@@ -58,6 +58,24 @@ After you have built and initialized your vagrant box:
 ```
 Your vagrant/apps folder now can be used on your host as well as guest without having to manualy syncronize any data
 
+### (Optional) ssh-agent forwarding
+
+To get your ssh key into your vagrant box add the following in the VagrantFile:
+
+```ruby
+   Vagrant::Config.run do |config|
+       config.ssh.forward_agent = true
+   end
+```
+
+You must also enable your host's ssh agent. On linux and mac the following should work:
+
+```bash
+/usr/bin/ssh-add -K ~/.ssh/id_rsa
+```
+
+On macs you will have to add this to ~/.ssh/bash_profile due to keys being 'forgotten' on restarts
+
 ## Proxy your frappe guest through your host's nginx
 
 You can proxy your development frappe instance through your local nginx server to ease development through a custom local hostname or even make your local development instance available to the internet.
