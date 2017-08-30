@@ -56,7 +56,13 @@ After you have built and initialized your vagrant box:
 ```bash
    source ~/.profile
 ```
-Your vagrant/apps folder now can be used on your host as well as guest without having to manualy syncronize any data
+Your vagrant/apps folder now can be used on your host as well as guest without having to manualy syncronize any data.
+NOTE: There is a current issue with vagrant shared folders where inotify events will not trigger when files are updated from the host. This means that while working and saving files from the host, frappe will not detect file changes thus will not reload them. To get around this you must install vagrant-fsinotify and vagrant-trigger plugins. Their configuration variables are already available on the Vagrantfile. To install run the following in your vagrant vm folder:
+
+```bash
+   vagrant plugin install vagrant-fsinotify
+   vagrant plugin install vagrant-trigger
+```
 
 ### (Optional) ssh-agent forwarding
 
