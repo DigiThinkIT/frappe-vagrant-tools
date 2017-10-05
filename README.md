@@ -1,6 +1,6 @@
 # Custom Vagrant V8 Setup
 
-This guide is for setting up a frappe/erpnext vagrant box from scratch plus a few extra productivity goodies.
+This guide is for setting up a frappe/erpnext vagrant box from scratch plus a few extra productivity goodies. Right now this guide is MACOS **ONLY** but most steps should work fairly similarly on Windows and much more so on Linux.
 
 Make sure you have vagrant installed and virtual box:
 
@@ -22,18 +22,15 @@ https://www.vagrantup.com/docs/virtualbox/
 ```bash
    vagrant up
 ```
-
-3) Go make some coffee, this will take a while
-
-to create a test frappe site
-
+3) Go make some coffee this will take a while to create a test frappe site.
+```bash
 bench new-site frappe
-
+```
 ## Starting the dev instance of frappe
-
+```bash
 bench start
-
-## Mounting apps directory for ease of development
+```
+## Mounting apps directory for ease of development **MAC/LINUX Tested Only**
 
 You can use vagrant's file system sync feature to edit your apps in your host and making these changes immediately available to the frappe guest vm.
 
@@ -46,24 +43,43 @@ After you have built and initialized your vagrant box:
    vagrant up
    vagrant ssh
 ```
-
 2) Move the apps directory in ~/frappe-bench/apps to your vagrant shared directory /vagrant/ and create mount point
 ```bash
    mv ~/frappe-bench/apps /vagrant/
    mkdir ~/frappe-bench/apps
 ```
-
 3) Edit ~/.profile add the following lines at the end of the file
 ```bash
    sudo mount --bind /vagrant/apps /home/vagrant/frappe-bench/apps
 ```
-
 4) Execute changes to .profil
 ```bash
    source ~/.profile
 ```
+Your vagrant/apps folder now can be used on your host as well as guest without having to manualy syncronize any data.
+NOTE: There is a current issue with vagrant shared folders where inotify events will not trigger when files are updated from the host. This means that while working and saving files from the host, frappe will not detect file changes thus will not reload them. To get around this you must install vagrant-fsnotify and vagrant-triggers plugins. Their configuration variables are already available on the Vagrantfile. To install run the following in your vagrant vm folder:
 
-Your vagrant/apps folder now can be used on your host as well as guest without having to manualy syncronize any data
+```bash
+   vagrant plugin install vagrant-fsnotify vagrant-triggers
+```
+
+### (Optional) ssh-agent forwarding
+
+To get your ssh key into your vagrant box add the following in the VagrantFile:
+
+```ruby
+   Vagrant::Config.run do |config|
+       config.ssh.forward_agent = true
+   end
+```
+
+You must also enable your host's ssh agent. On linux and mac the following should work:
+
+```bash
+/usr/bin/ssh-add -K ~/.ssh/id_rsa
+```
+
+On macs you will have to add this to ~/.ssh/bash_profile due to keys being 'forgotten' on restarts
 
 ## Proxy your frappe guest through your host's nginx
 
@@ -81,7 +97,6 @@ http://127.0.0.1:8002
 ```bash
    cp ./mac-nginx/conf.d/frappe-v8.conf /usr/local/etc/nginx/conf.d/
 ```
-
 2) Edit your newly copied nginx config file and change the domain name to anything you like.
 ```bash
    server_name frappev8.dev;
@@ -90,7 +105,6 @@ http://127.0.0.1:8002
 ```bash
    server_name myfrappe.dev;
 ```
-
 3) Edit your /etc/hosts file to point to your local nginx instance
 ```bash
    127.0.0.1  frappev8.dev
@@ -99,7 +113,6 @@ http://127.0.0.1:8002
 ```bash
    127.0.0.1  myfrappe.dev
 ```
-
 4) Start nginx
 ```bash
    sudo nginx
