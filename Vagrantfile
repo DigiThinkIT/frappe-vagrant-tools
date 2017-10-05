@@ -6,7 +6,12 @@ Vagrant.configure("2") do |config|
   config.vm.box = "bento/ubuntu-16.04"
   config.vm.network "forwarded_port", guest: 8000, host: 8002
   config.vm.network "forwarded_port", guest: 9000, host: 9002
+  config.vm.network "forwarded_port", guest: 6787, host: 6787
+
   config.ssh.forward_agent = true
+
+  config.vm.synced_folder ".", "/vagrant", fsnotify: [:modified, :removed], exclude: ["*.pyc", "*.pyd", "*.pyo", ".git/*"]
+  config.trigger.after :up do run "vagrant fsnotify" end
 
   config.vm.provider "virtualbox" do |vb|
      # Display the VirtualBox GUI when booting the machine
@@ -30,5 +35,7 @@ Vagrant.configure("2") do |config|
     cd /tmp
     sudo rm ~/.wget-hsts
     python install.py --develop --password="frappe"
+
+    source /vagrant/post_install.sh
   SHELL
 end
