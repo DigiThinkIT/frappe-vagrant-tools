@@ -8,6 +8,10 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 9000, host: 9002
   config.vm.network "forwarded_port", guest: 6787, host: 6787
 
+  config.vm.provider :virtualbox do |vb|
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  end
+
   config.ssh.forward_agent = true
 
   config.vm.synced_folder ".", "/vagrant", fsnotify: [:modified, :removed], exclude: ["*.pyc", "*.pyd", "*.pyo", ".git/*"]
